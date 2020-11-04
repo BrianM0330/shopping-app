@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+
+    def cucumberVersion = '6.6.1'
     implementation 'org.springframework.boot:spring-boot-starter-web:2.3.0.RELEASE'
     implementation 'javax.persistence:javax.persistence-api:2.2'
     implementation 'org.projectlombok:lombok:1.18.12'
@@ -22,6 +24,10 @@ dependencies {
 //    testImplementation 'org.assertj:assertj-core:3.16.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
+
+    testImplementation "io.cucumber:cucumber-java:$cucumberVersion"
+    testImplementation "io.cucumber:cucumber-junit:$cucumberVersion"
+
 }
 
 group = 'edu.depail.se433'
@@ -29,19 +35,25 @@ version = '0.0.1-SNAPSHOT'
 description = 'shopping-app'
 sourceCompatibility = '11'
 
-def user = 'dwalke30'
+def user = 'BMENDO13'
 
 bootJar {
     mainClassName = 'edu.depaul.se433.shoppingapp.ShoppingAppApplication'
 }
 
+task cukesTest(type: Test) {
+    include "CucumberTestRunner"
+}
+
 def test = tasks.named("test") {
 
-    useJUnitPlatform ()
+    useJUnitPlatform()
 
     afterTest { desc, result ->
         logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+
     }
+    finalizedBy cukesTest
 }
 
 task packageDistribution(type: Zip) {
