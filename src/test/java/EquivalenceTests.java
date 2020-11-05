@@ -11,9 +11,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 public class EquivalenceTests {
-    //TODO: Add Boundary Testing
-
     private TotalCostCalculator calculator;
+
+    @ParameterizedTest
+    @MethodSource("boundaryValues")
+    @DisplayName("Boundary testing for price values")
+    void boundaryTests(String state, ShippingType shipType, Double rawPrice, Double expectedTotal) {
+        Double result = TotalCostCalculator.calculate(rawPrice, state, shipType);
+        assertEquals(expectedTotal, result);
+    }
 
     @ParameterizedTest
     @MethodSource("weakNormalValues")
@@ -136,6 +142,20 @@ public class EquivalenceTests {
             Arguments.of("IL", ShippingType.NEXT_DAY, 0.0, -1.0),
             Arguments.of("AK", ShippingType.STANDARD, 0.0, -1.0),
             Arguments.of("AK", ShippingType.NEXT_DAY, 0.0, -1.0)
+        );
+    }
+
+    private static Stream<Arguments> boundaryValues () {
+        return Stream.of(
+            Arguments.of("IL", ShippingType.STANDARD, 1.00, 11.06),
+            Arguments.of("IL", ShippingType.STANDARD, 49.00, 61.94),
+            Arguments.of("IL", ShippingType.STANDARD, 50.00, 63.00),
+            Arguments.of("IL", ShippingType.STANDARD, 51.00, 54.06),
+
+            Arguments.of("AK", ShippingType.STANDARD, 1.00, 11.00),
+            Arguments.of("AK", ShippingType.STANDARD, 49.00, 59.00),
+            Arguments.of("AK", ShippingType.STANDARD, 50.00, 60.00),
+            Arguments.of("AK", ShippingType.STANDARD, 51.00, 51.00)
         );
     }
 }
