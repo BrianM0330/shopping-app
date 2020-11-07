@@ -64,6 +64,7 @@ task packageDistribution(type: Zip) {
     destinationDirectory = file("$buildDir/dist")
 
     from("$projectDir") {
+        include "build/reports/jacoco/**"
         include "src/**/*"
         include "build.gradle"
         include "gradlew"
@@ -87,7 +88,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.8
+                minimum = 0.3
             }
         }
     }
