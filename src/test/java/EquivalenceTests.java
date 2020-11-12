@@ -1,7 +1,6 @@
 import edu.depaul.se433.shoppingapp.ShippingType;
 import edu.depaul.se433.shoppingapp.TotalCostCalculator;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.params.ParameterizedTest;

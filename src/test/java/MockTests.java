@@ -104,11 +104,14 @@ public class MockTests {
         );
         purchasesToReturn.add(purchaseNoFreeShip);
 
-
         when(mockDBO.getPurchases()).thenReturn(purchasesToReturn);
 
         PurchaseAgent agent = new PurchaseAgent(mockDBO);
         agent.save(purchaseNoFreeShip);
+
+        purchaseNoFreeShip.toString();
+        purchaseNoFreeShip.getIdNum();
+        purchaseNoFreeShip.getState();
 
         verify(mockDBO, times(1)).savePurchase(purchaseNoFreeShip);
     }
